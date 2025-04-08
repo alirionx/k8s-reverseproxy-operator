@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-reverseproxy-operator
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      application: kk8s-reverseproxy-operator
+  template:
+    metadata:
+      labels:
+        application: k8s-reverseproxy-operator
+    spec:
+      serviceAccountName: k8s-reverseproxy-operator
+      containers:
+        - name: k8s-reverseproxy-operator
+          image: ghcr.io/alirionx/k8s-reverseproxy-operator:latest
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
+            requests:
+              memory: "64Mi"
+              cpu: "125m"
