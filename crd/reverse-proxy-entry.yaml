@@ -1,0 +1,80 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: reverseproxyentrys.app-scape.dev
+spec:
+  scope: Namespaced
+  group: app-scape.dev
+  names:
+    kind: ReverseProxyEntry
+    plural: reverseproxyentrys
+    singular: reverseproxyentry
+    shortNames:
+      - rpes
+      - rpe
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            status:
+              type: object
+              x-kubernetes-preserve-unknown-fields: true
+            spec:
+              type: object
+              properties:
+                target:
+                  type: object
+                  properties:
+                    endpoints:
+                      type: array
+                      items:
+                        type: string
+                      default: []
+                    port:
+                      type: integer
+                  required:
+                    - endpoints
+                    - port
+                ingress:
+                  type: object
+                  properties:
+                    className:
+                      type: string
+                      minLength: 4
+                    targetProtocol:
+                      type: string
+                      enum:
+                        - http
+                        - https
+                      default: http
+                    host:
+                      type: string
+                      minLength: 4
+                    tls:
+                      type: boolean
+                      default: false
+                    secretName:
+                      type: string
+                      minLength: 4
+                    annotations:
+                      type: object
+                      additionalProperties:
+                        type: string
+                      example:
+                        "cert-manager.io/cluster-issuer": "cloudflare-issuer"
+                      default: {}
+                  required:
+                    - tls
+                    - host
+                    - className
+
+
+
+
+
+
+
