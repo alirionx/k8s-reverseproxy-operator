@@ -5,16 +5,15 @@ metadata:
 spec:
   target:
     endpoints:
-    - 192.168.10.21
-    - 192.168.10.23
+    - 192.168.10.20
     port: 8080
   ingress:
     className: "nginx"
     targetProtocol: http
     host: "palim-palim.app-scape.de"
-    tls: true
+    tls: false
     # secretName: "geheim"
     annotations: 
-      cert-manager.io/cluster-issuer: "cloudflare-issuer"
+      # cert-manager.io/cluster-issuer: "cloudflare-issuer"
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
  
