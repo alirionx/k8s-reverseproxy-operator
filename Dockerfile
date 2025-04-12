@@ -10,9 +10,14 @@ RUN pyinstaller --onefile reverse-proxy.py
 
 # Stage 2: Runtime Environment
 FROM alpine:latest AS runner
+ARG UID=1000
+ARG GID=1000
+RUN addgroup -g $GID appgroup && \
+    adduser -u $UID -G appgroup -D -s /bin/ash appuser
 RUN apk add --no-cache libffi
 COPY --from=build-env /app/dist/reverse-proxy /app/
 WORKDIR /app
+USER appuser
 CMD ["./reverse-proxy", "run", "--verbose"]
 
 

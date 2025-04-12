@@ -113,7 +113,7 @@ def delete_fn(body, **kwargs):
             )
 
 
-#-The Runner-----------------------------
+#-The Runner----------------------------------------------------
 if __name__ == "__main__":
     from kopf.cli import main
     main()
